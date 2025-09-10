@@ -53,8 +53,9 @@ class Data:
         """
         lista_sin_duplicados = []
         for elemento in lista:
-           if elemento not in lista_sin_duplicados:
-              lista_sin_duplicados.append(elemento)
+            if not any(e is elemento or (e == elemento and type(e) == type(elemento)) 
+                       for e in lista_sin_duplicados):
+                lista_sin_duplicados.append(elemento)
         return lista_sin_duplicados
     def merge_ordenado(self, lista1, lista2):
         """
@@ -193,22 +194,22 @@ class Data:
 
         def dequeue():
           if not cola:
-             return None  # <-- Algunos tests esperan None en lugar de lanzar error
-        return cola.pop(0)
+            return None
+          return cola.pop(0)
 
         def peek():
-          if not cola:
-             return None  # <-- Igual aquí
-        return cola[0]
+           if not cola:
+              return None
+           return cola[0]
 
         def is_empty():
            return len(cola) == 0
 
         return {
-         'enqueue': enqueue,
-         'dequeue': dequeue,
-         'peek': peek,
-         'is_empty': is_empty
+          'enqueue': enqueue,
+          'dequeue': dequeue,
+          'peek': peek,
+          'is_empty': is_empty
         }
     
     def matriz_transpuesta(self, matriz):

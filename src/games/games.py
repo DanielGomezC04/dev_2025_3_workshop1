@@ -1,3 +1,4 @@
+import random
 class Games:
     def piedra_papel_tijera(self, jugador1, jugador2):
         """
@@ -67,29 +68,29 @@ class Games:
              ["O", "O", " "],
              [" ", " ", " "]] -> "X"
         """
-        for i in range(3):
-        # Filas
-           if tablero[i][0] == tablero[i][1] == tablero[i][2] != " ":
-             return tablero[i][0]
-        # Columnas
-           if tablero[0][i] == tablero[1][i] == tablero[2][i] != " ":
-             return tablero[0][i]
-
-    
-        if tablero[0][0] == tablero[1][1] == tablero[2][2] != " ":
-           return tablero[0][0]
-
-    
-        if tablero[0][2] == tablero[1][1] == tablero[2][0] != " ":
-           return tablero[0][2]
-
-   
         for fila in tablero:
-           if " " in fila:
-             return "continua"
+          if fila[0] == fila[1] == fila[2] != " ":
+            return fila[0]
 
+    # Revisar columnas
+        for i in range(3):
+          if tablero[0][i] == tablero[1][i] == tablero[2][i] != " ":
+            return tablero[0][i]
+
+    # Revisar diagonales
+        if tablero[0][0] == tablero[1][1] == tablero[2][2] != " ":
+         return tablero[0][0]
+        if tablero[0][2] == tablero[1][1] == tablero[2][0] != " ":
+         return tablero[0][2]
+
+    # Si hay casillas vacías → el juego continúa
+        for fila in tablero:
+          if " " in fila:
+            return "continua"
+
+    # Si no hay ganador y no quedan espacios → empate
         return "empate"
-    
+
     def generar_combinacion_mastermind(self, longitud, colores_disponibles):
         """
         Genera una combinación aleatoria para el juego Mastermind.
@@ -105,9 +106,15 @@ class Games:
             generar_combinacion_mastermind(4, ["rojo", "azul", "verde"]) 
             -> ["rojo", "azul", "rojo", "verde"]
         """
-        def generar_combinacion_mastermind(self, longitud, colores_disponibles):
-           return [random.choice(colores_disponibles) for _ in range(longitud)]
-    
+        
+        if longitud <= 0:
+          return []
+
+        if not colores_disponibles:
+          raise ValueError("La lista de colores no puede estar vacía.")
+
+        combinacion = [random.choice(colores_disponibles) for _ in range(longitud)]
+        return combinacion
     def validar_movimiento_torre_ajedrez(self, desde_fila, desde_col, hasta_fila, hasta_col, tablero):
         """
         Valida si un movimiento de torre en ajedrez es legal.
